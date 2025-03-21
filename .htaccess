@@ -1,0 +1,16 @@
+# すべてのリクエストを index.php にリダイレクト（ルーティング用）
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?$1 [QSA,L]
+
+# .envファイルへのアクセスを禁止
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# PHPエラーレポートを無効化（本番環境向け）
+php_flag display_errors off
+php_flag log_errors on
+php_value error_log /var/log/apache2/php_errors.log
